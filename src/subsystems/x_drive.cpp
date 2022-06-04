@@ -42,15 +42,15 @@ void calculateMotorSpeed(void) {
   
 
     //calculate lateral and angular speed
-    double lB = calculate_speed(angle, 2, 1, leftJoystickX, leftJoystickY);
-    double lF = calculate_speed(angle, 1, 1, leftJoystickX, leftJoystickY);
+    double lB = calculate_speed(angle, 2, leftJoystickX, leftJoystickY);
+    double lF = calculate_speed(angle, 1, leftJoystickX, leftJoystickY);
 
     lB = calculate_angle_speed(rightJoystickX, lB, 1);
     lF = calculate_angle_speed(rightJoystickX, lF, 1);
     
 
-    double rB = calculate_speed(angle, 2, -1, leftJoystickX, leftJoystickY);
-    double rF = calculate_speed(angle, 1, -1, leftJoystickX, leftJoystickY);
+    double rB = calculate_speed(angle, 1, leftJoystickX, leftJoystickY);
+    double rF = calculate_speed(angle, 2, leftJoystickX, leftJoystickY);
     
     rB = calculate_angle_speed(rightJoystickX, rB, -1);
     rF = calculate_angle_speed(rightJoystickX, rF, -1);
@@ -114,30 +114,31 @@ double calculate_distance(int x, int y) {
 
 }
 
-//-1 corresponds to the right side of the robot, 1 corresponds to the left side of the robot - for reversed
 
-//1 is forward, 2 is backwards
-double calculate_speed(int angle, int motor, int reversed, int x, int y) {
+//1 is right diagonal (/), 2 is left diagonal (\)
+double calculate_speed(int angle, int motor, int x, int y) {
     double speed = 0;
     switch (motor){
         case 1:
-            if (angle >= 235 || angle <= 45) {
-                speed = calculate_distance(x, y) * reversed;
+            if (angle <= 225 || angle >= 45) {
+                speed = calculate_distance(x, y) ;
             } else {
-                speed = -calculate_distance(x, y) * reversed;
+                speed = -calculate_distance(x, y);
             }
             break;
         case 2:
             if (angle >= 315 || angle <= 135) {
-                speed = calculate_distance(x, y) * reversed;
+                speed = calculate_distance(x, y);
             } else {
-                speed = -calculate_distance(x, y) * reversed;
+                speed = -calculate_distance(x, y);
             }
             break;
         default:
             speed = 0;
             break;
     }
+
+    return speed;
     
 }
 
