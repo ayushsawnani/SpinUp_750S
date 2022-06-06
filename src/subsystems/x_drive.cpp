@@ -25,13 +25,13 @@ void calculateMotorSpeed(void) {
 
 
     //calculate the speed of the motors
-    int leftJoystickY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-    int leftJoystickX = master.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
-    int rightJoystickX = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+    int lY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+    int lX = master.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
+    int rX = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
 
     //calculates angle of the joystick
-    double angle = map_circular_coordinates(leftJoystickX, leftJoystickY);
+    double angle = map_circular_coordinates(lX, lY);
 
     
     
@@ -41,19 +41,13 @@ void calculateMotorSpeed(void) {
 
   
 
-    //calculate lateral and angular speed
-    double lB = calculate_speed(angle, 2, leftJoystickX, leftJoystickY);
-    double lF = calculate_speed(angle, 1, leftJoystickX, leftJoystickY);
 
-    lB = calculate_angle_speed(rightJoystickX, lB, 1);
-    lF = calculate_angle_speed(rightJoystickX, lF, 1);
-    
-
-    double rB = calculate_speed(angle, 1, leftJoystickX, leftJoystickY);
-    double rF = calculate_speed(angle, 2, leftJoystickX, leftJoystickY);
-    
-    rB = calculate_angle_speed(rightJoystickX, rB, -1);
-    rF = calculate_angle_speed(rightJoystickX, rF, -1);
+    //gets the lateral speed, then the angular speed, then converts it to volts
+    //1 is left diagonal (\) and 2 is right diagonal (/)
+    double lB = calculate_angle_speed(lX, lY, 2, angle, rX, 1);
+    double lF = calculate_angle_speed(lX, lY, 1, angle, rX, 1);
+    double rB = calculate_angle_speed(lX, lY, 1, angle, rX, -1);
+    double rF = calculate_angle_speed(lX, lY, 2, angle, rX, -1);
 
     //calculate the acceleration of the motors
     int accel_movement = calculate_derivative( lB, prev_movement);
@@ -143,12 +137,14 @@ double calculate_speed(int angle, int motor, int x, int y) {
 }
 
 //-1 for reversed, 1 for not
-double calculate_angle_speed(int rX, double lateral_speed, int reversed) {
+double calculate_angle_speed(int lX, int lY, int motor, int angle, int rX, int reversed) {
     
-    return lateral_speed + (rX * reversed);
+    return calculate_volt_speed(calculate_speed(angle, motor, lX, lY) + (rX * reversed));
+
 }
 
-
-
+double calculate_volt_speed(double speed) {
+    return speed / 127 * 12;
+}
 
 
