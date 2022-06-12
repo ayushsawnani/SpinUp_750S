@@ -15,7 +15,7 @@ const static int TRI_LEFT_ANGLE = 145;
 const static int TRI_RIGHT_ANGLE = 45;
 const static int TRI_BOTTOM_ANGLE = 270;
 
-void calculateMotorSpeed(void) {
+void calculateKiwiMotorSpeed(void) {
 
     //calculate the speed of the motors
     int lY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);

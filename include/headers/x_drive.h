@@ -3,4 +3,4 @@
 
 void setDrive(int lB, int lF, int rB, int rF);
 
-void calculateMotorSpeed(void);
+void calculateXMotorSpeed(void);

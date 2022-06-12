@@ -25,7 +25,7 @@ const static int RIGHT_BACK_ANGLE = 315;
 
 
 
-void calculateMotorSpeed(void) {
+void calculateXMotorSpeed(void) {
 
 
     //calculate the speed of the motors
