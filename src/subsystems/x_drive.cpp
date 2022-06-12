@@ -7,17 +7,21 @@
 void setDrive(int lB, int lF, int rB, int rF) {
 
 
-    leftBack = lB;
-    leftFront = lF;
-    rightBack = rB;
-    rightFront = rF;
+    leftBack.move_voltage(lB);
+    leftFront.move_voltage(lF);
+    rightBack.move_voltage(rB);
+    rightFront.move_voltage(rF);
 
 
 }
 
-//prev values to calculate d_movement and d_turn
-static int prev_movement = 0;
-static int prev_turn = 0;
+//constant values for the motor vector angle
+
+const static int LEFT_FRONT_ANGLE = 135;
+const static int LEFT_BACK_ANGLE = 225;
+const static int RIGHT_FRONT_ANGLE = 45;
+const static int RIGHT_BACK_ANGLE = 315;
+
 
 
 
@@ -30,120 +34,51 @@ void calculateMotorSpeed(void) {
     int rX = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
 
-    //calculates angle of the joystick
-    double angle = map_circular_coordinates(lX, lY);
+    //we can measure the angle from the motor's vector to the joystick's vector
+    //the motors vector is the vector perpendicular to the motor.
 
-    
-    
+    //127 * sin(angle) = movement for the current motor.
 
+    int lF = calculate_angle_speed(lX, lY, LEFT_FRONT_ANGLE, rX, 1);
+    int lB = calculate_angle_speed(lX, lY, LEFT_BACK_ANGLE, rX, 1);
+    int rF = calculate_angle_speed(lX, lY, RIGHT_FRONT_ANGLE, rX, -1);
+    int rB = calculate_angle_speed(lX, lY, RIGHT_BACK_ANGLE, rX, -1);
 
-    
-
-  
-
-
-    //gets the lateral speed, then the angular speed, then converts it to volts
-    //1 is left diagonal (\) and 2 is right diagonal (/)
-    double lB = calculate_angle_speed(lX, lY, 2, angle, rX, 1);
-    double lF = calculate_angle_speed(lX, lY, 1, angle, rX, 1);
-    double rB = calculate_angle_speed(lX, lY, 1, angle, rX, -1);
-    double rF = calculate_angle_speed(lX, lY, 2, angle, rX, -1);
-
-    //calculate the acceleration of the motors
-    int accel_movement = calculate_derivative( lB, prev_movement);
-    int accel_turn = calculate_derivative(rB, prev_turn);
-
-    //acceleration of the movement of the drive
-    accel_movement = constrain(accel_movement, -127, 127);
-
-    //acceleration of the turning of the drive
-    accel_turn = constrain(accel_turn, -127, 127);
+    setDrive(lB, lF, rB, rF);
 
 
 
-    //set the motors to the calculated speed + the powereq for the acceleration for smoothness
-    setDrive(lB + (accel_movement + accel_turn), lF + (accel_movement + accel_turn), rB + (accel_movement - accel_turn), rF + (accel_movement - accel_turn));
-
-    prev_movement = lB;
-    prev_turn = rB;
 
 
 }
 
-//create constrains
-int constrain(int val, int min, int max) {
-    if (val > max) {
-        return max;
-    } else if (val < min) {
-        return min;
-    } else {
-        return val;
-    }
-}
+double calculate_angle(int lX, int lY, double angle){
 
 
+    //calculates the angle of the vector from the center of the joystick to the joystick's position
+    double vector_angle = atan2(lY, lX) * 180 / M_PI;
 
-//calculates the acceleration of the joystick, used for the drivetrain
-int calculate_derivative(int current, int previous) {
+    double final_angle = abs(vector_angle - angle);
 
-    int derivative = current - previous;
-
-    return derivative;
-
-}
-
-int map_circular_coordinates(int x, int y) {
-
-    int angle = atan2(y, x) * 180 / M_PI;
-
-    return angle;
-
-}
-
-double calculate_distance(int x, int y) {
-
-    double distance = sqrt(pow(x, 2) + pow(y, 2));
-
-    return distance;
-
-}
-
-
-//1 is right diagonal (/), 2 is left diagonal (\)
-double calculate_speed(int angle, int motor, int x, int y) {
-    double speed = 0;
-    switch (motor){
-        case 1:
-            if (angle <= 225 || angle >= 45) {
-                speed = calculate_distance(x, y) ;
-            } else {
-                speed = -calculate_distance(x, y);
-            }
-            break;
-        case 2:
-            if (angle >= 315 || angle <= 135) {
-                speed = calculate_distance(x, y);
-            } else {
-                speed = -calculate_distance(x, y);
-            }
-            break;
-        default:
-            speed = 0;
-            break;
+    while (final_angle > 90) {
+        final_angle -= 90;
     }
 
-    return speed;
-    
 }
 
 //-1 for reversed, 1 for not
-double calculate_angle_speed(int lX, int lY, int motor, int angle, int rX, int reversed) {
+double calculate_angle_speed(int lX, int lY, double motor_angle, int rX, int reversed) {
     
-    return calculate_volt_speed(calculate_speed(angle, motor, lX, lY) + (rX * reversed));
+    double final_angle = calculate_angle(lX, lY, motor_angle);
+   
+    double speed = 127 * sin(final_angle * M_PI / 180);
+
+
+    return calculate_volt_speed(speed + rX * reversed);
 
 }
 
-double calculate_volt_speed(double speed) {
+int calculate_volt_speed(double speed) {
     return speed / 127 * 12;
 }
 

@@ -74,6 +74,7 @@ void opcontrol(void);
 #ifdef __cplusplus
 #include "headers/globals.h"
 #include "headers/x_drive.h"
+#include "headers/kiwi_drive.h"
 //#include <iostream>
 #endif
 
