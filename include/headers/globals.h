@@ -2,8 +2,6 @@
 
 
 
-Controller master;
+extern Controller master;
 
-Motor leftBack, leftFront, rightBack, rightFront;
-
-Motor triLeft, triRight, triBottom;
+extern Motor leftBack, leftFront, rightBack, rightFront;
