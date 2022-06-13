@@ -28,8 +28,8 @@ void calculateKiwiMotorSpeed(void) {
     //127 * sin(angle) = movement for the current motor.
 
     int tL = calculate_angle_speed(lX, lY, TRI_LEFT_ANGLE, rX, 1);
-    int tR = calculate_angle_speed(lX, lY, TRI_RIGHT_ANGLE, rX, 1);
-    int tB = calculate_angle_speed(lX, lY, TRI_BOTTOM_ANGLE, rX, -1);
+    int tR = calculate_angle_speed(lX, lY, TRI_RIGHT_ANGLE, rX, -1);
+    int tB = calculate_angle_speed(lX, lY, TRI_BOTTOM_ANGLE, rX, 1);
 
     setDrive(tL, tR, tB);
 
