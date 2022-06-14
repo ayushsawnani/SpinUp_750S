@@ -27,6 +27,8 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
+	inertial_sensor.reset();
 }
 
 /**
@@ -74,7 +76,10 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	calculateXMotorSpeed();
+	while(true) {
+		calculateXMotorSpeed();
+		pros::delay(20);
+	}
 
 	//calculateKiwiMotorSpeed();
 }

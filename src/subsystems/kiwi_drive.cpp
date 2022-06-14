@@ -27,9 +27,9 @@ void calculateKiwiMotorSpeed(void) {
     //the motors vector is the vector perpendicular to the motor.
     //127 * sin(angle) = movement for the current motor.
 
-    int tL = calculate_angle_speed(lX, lY, TRI_LEFT_ANGLE, rX, 1);
-    int tR = calculate_angle_speed(lX, lY, TRI_RIGHT_ANGLE, rX, -1);
-    int tB = calculate_angle_speed(lX, lY, TRI_BOTTOM_ANGLE, rX, 1);
+    int tL = calculate_kiwi_angle_speed(lX, lY, TRI_LEFT_ANGLE, rX, 1);
+    int tR = calculate_kiwi_angle_speed(lX, lY, TRI_RIGHT_ANGLE, rX, -1);
+    int tB = calculate_kiwi_angle_speed(lX, lY, TRI_BOTTOM_ANGLE, rX, 1);
 
     setDrive(tL, tR, tB);
 
@@ -40,7 +40,7 @@ void calculateKiwiMotorSpeed(void) {
 
 }
 
-double calculate_angle(int lX, int lY, double angle){
+double calculate_kiwi_angle(int lX, int lY, double angle){
 
 
     //calculates the angle of the vector from the center of the joystick to the joystick's position
@@ -52,21 +52,23 @@ double calculate_angle(int lX, int lY, double angle){
         final_angle -= 90;
     }
 
+    return final_angle;
+
 }
 
 //-1 for reversed, 1 for not
-double calculate_angle_speed(int lX, int lY, double motor_angle, int rX, int reversed) {
+double calculate_kiwi_angle_speed(int lX, int lY, double motor_angle, int rX, int reversed) {
     
-    double final_angle = calculate_angle(lX, lY, motor_angle);
+    double final_angle = calculate_kiwi_angle(lX, lY, motor_angle);
    
     double speed = 127 * sin(final_angle * M_PI / 180);
 
 
-    return calculate_volt_speed(speed + rX * reversed);
+    return calculate_kiwi_volt_speed(speed + rX * reversed);
 
 }
 
-int calculate_volt_speed(double speed) {
+double calculate__kiwi_volt_speed(double speed) {
     return speed / 127 * 12;
 }
 
