@@ -4,9 +4,9 @@
 
 void setDrive(int tL, int tR, int tB) {
     
-    triLeft.move_voltage(tL);
-    triRight.move_voltage(tR);
-    triBottom.move_voltage(tB);
+    triLeft.move_velocity(tL);
+    triRight.move_velocity(tR);
+    triBottom.move_velocity(tB);
 
 
 }
@@ -18,18 +18,50 @@ const static int TRI_BOTTOM_ANGLE = 270;
 void calculateKiwiMotorSpeed(void) {
 
     //calculate the speed of the motors
+
+    //lY indicates forward/backward motion,
+    //lX indicates left/right motion
+    //rX indicates turning motion
     int lY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
     int lX = master.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
     int rX = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
-    //we can measure the angle from the motor's vector to the joystick's vector
 
-    //the motors vector is the vector perpendicular to the motor.
-    //127 * sin(angle) = movement for the current motor.
+    //calculates inertial sensor rotation about the z axis
+    double rotation = inertial_sensor.get_rotation();
+    lcd::print(0, "rotation: %f", rotation);
 
-    int tL = calculate_kiwi_angle_speed(lX, lY, TRI_LEFT_ANGLE, rX, 1);
-    int tR = calculate_kiwi_angle_speed(lX, lY, TRI_RIGHT_ANGLE, rX, -1);
-    int tB = calculate_kiwi_angle_speed(lX, lY, TRI_BOTTOM_ANGLE, rX, 1);
+
+
+    //determines which side of the robot is facing forward (away from driver)
+    int pointer  = (int)rotation/120;
+
+    double tL, tR, tB;
+
+    switch (pointer) {
+
+
+        case 0: {
+            tL = lY + lX + rX;
+            tR = lY - lX - rX;
+            tB = lX + rX;
+            break;
+
+        }
+        case 1: {
+            tL = lX + rX;
+            tR = lY + lX + rX; 
+            tB = lY - lX - rX; 
+            break;
+        }
+        case 2: {
+            tL = lY - lX - rX; 
+            tR = lX + rX; 
+            tB = lY + lX + rX; 
+            break;
+        }
+
+    }
 
     setDrive(tL, tR, tB);
 
@@ -39,39 +71,5 @@ void calculateKiwiMotorSpeed(void) {
 
 
 }
-
-double calculate_kiwi_angle(int lX, int lY, double angle){
-
-
-    //calculates the angle of the vector from the center of the joystick to the joystick's position
-    double vector_angle = atan2(lY, lX) * 180 / M_PI;
-
-    double final_angle = abs(vector_angle - angle);
-
-    while (final_angle > 90) {
-        final_angle -= 90;
-    }
-
-    return final_angle;
-
-}
-
-//-1 for reversed, 1 for not
-double calculate_kiwi_angle_speed(int lX, int lY, double motor_angle, int rX, int reversed) {
-    
-    double final_angle = calculate_kiwi_angle(lX, lY, motor_angle);
-   
-    double speed = 127 * sin(final_angle * M_PI / 180);
-
-
-    return calculate_kiwi_volt_speed(speed + rX * reversed);
-
-}
-
-double calculate__kiwi_volt_speed(double speed) {
-    return speed / 127 * 12;
-}
-
-
 
 
