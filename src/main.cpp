@@ -83,6 +83,12 @@ void opcontrol() {
 	while(true) {
 		calculateXMotorSpeed();
 		//calculateKiwiMotorSpeed();
+
+		setBuildMotors();
+		
+
+		 
+
 		pros::delay(20);
 	}
 
