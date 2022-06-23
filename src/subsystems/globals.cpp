@@ -1,6 +1,6 @@
 #include "main.h"
 
-Controller master(E_CONTROLLER_MASTER);
+Controller master(CONTROLLER_MASTER);
 
 
 /*
@@ -14,10 +14,10 @@ Controller master(E_CONTROLLER_MASTER);
 */
 
 
-Motor leftBack(1, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
-Motor leftFront(2, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
-Motor rightFront(3, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
-Motor rightBack(4, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
+Motor leftBack(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor leftFront(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor rightFront(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightBack(4, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 
 
 /*
@@ -27,28 +27,29 @@ Motor rightBack(4, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
         tB
         __
 */
-Motor triLeft(1, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
-Motor triRight(2, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
-Motor triBottom(3, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+
+Motor triLeft(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor triRight(2, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor triBottom(3, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 //expands the robot during endgame
-Motor expander(10, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor expander(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //pushes the disk to shoot it
 ADIDigitalOut dispenser('A');
 
 //takes in the disks
-Motor intake(12, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor intake(12, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //rolls the color roller
-Motor roller(13, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor roller(13, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //angles the outtake
-Motor angler(14, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor angler(14, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //the wheel to shoot out the disk
-Motor flywheel(15, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor flywheel(15, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 IMU inertial_sensor(20);
