@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pros/motors.h"
 
 Controller master(CONTROLLER_MASTER);
 
@@ -14,10 +15,12 @@ Controller master(CONTROLLER_MASTER);
 */
 
 
+
 Motor leftBack(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 Motor leftFront(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 Motor rightFront(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor rightBack(4, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+
 
 
 /*
@@ -30,7 +33,7 @@ Motor rightBack(4, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 
 Motor triLeft(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 Motor triRight(2, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor triBottom(3, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor triBottom(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 
 
 //expands the robot during endgame

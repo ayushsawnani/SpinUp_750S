@@ -38,30 +38,35 @@ void calculateKiwiMotorSpeed(void) {
 
     double tL, tR, tB;
 
-    switch (pointer) {
+    tL = lY + lX + rX;
+    tR = lY - lX - rX;
+    tB = lX - rX;
+
+    // switch (pointer) {
 
 
-        case 0: {
-            tL = lY + lX + rX;
-            tR = lY - lX - rX;
-            tB = lX + rX;
-            break;
+    //     case 0: {
+    //         tL = lY + lX + rX;
+    //         tR = lY - lX - rX;
+    //         tB = lX + rX;
+            
+    //         break;
 
-        }
-        case 1: {
-            tL = lX + rX;
-            tR = lY + lX + rX; 
-            tB = lY - lX - rX; 
-            break;
-        }
-        case 2: {
-            tL = lY - lX - rX; 
-            tR = lX + rX; 
-            tB = lY + lX + rX; 
-            break;
-        }
+    //     }
+    //     case 1: {
+    //         tL = lX + rX;
+    //         tR = lY + lX + rX; 
+    //         tB = lY - lX - rX; 
+    //         break;
+    //     }
+    //     case 2: {
+    //         tL = lY - lX - rX; 
+    //         tR = lX + rX; 
+    //         tB = lY + lX + rX; 
+    //         break;
+    //     }
 
-    }
+    // }
 
     setDrive(tL, tR, tB);
 
