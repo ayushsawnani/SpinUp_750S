@@ -1,5 +1,5 @@
 # SpinUp_750S
-750Spark's 2022-2023 code for VEX: Spin Up.
+750Smoke's 2022-2023 code for VEX: Spin Up.
 
 Our project is created using the **PROS** CLI with the **Visual Studio Code** editor.
 
@@ -16,4 +16,8 @@ Our project is created using the **PROS** CLI with the **Visual Studio Code** ed
 - Skills
 - Odometry Implementation
 - Winning Worlds
+
+*Contributors*
+- Ayush Sawnani
+- Varun Mannam
 
