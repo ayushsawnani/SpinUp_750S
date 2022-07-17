@@ -4,9 +4,9 @@
 Our project is created using the **PROS** CLI with the **Visual Studio Code** editor.
 
 *Includes*
-- X-Drive code, using power equation
+- X-Drive code, using directional control
 
-- Kiwi Drive code, using power equation
+- Kiwi Drive code, using power equation (absolute useless)
 
 - Build Drive code
 
