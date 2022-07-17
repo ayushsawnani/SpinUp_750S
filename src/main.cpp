@@ -81,8 +81,8 @@ void autonomous() {
  */
 void opcontrol() {
 	while(true) {
-		//calculateXMotorSpeed();
-		calculateKiwiMotorSpeed();
+		calculateXMotorSpeed();
+		//calculateKiwiMotorSpeed();
 
 		setBuildMotors();
 		

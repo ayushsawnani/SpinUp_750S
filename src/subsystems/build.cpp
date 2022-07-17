@@ -4,6 +4,8 @@ static bool INTAKE_RUNNING = false;
 static bool FLYWHEEL_RUNNING = false; 
 void setBuildMotors() {
 
+    /*
+
     //In C++, 1 is true and 0 is false
 
     //sets the dispenser
@@ -22,6 +24,9 @@ void setBuildMotors() {
     expander.move_velocity(master.get_digital(DIGITAL_B) * 200);
 
 
+    
+
+
     //1 is true and 0 is false
 
     //toggles intake motors
@@ -31,6 +36,12 @@ void setBuildMotors() {
     //toggles flywheel motors
     if (master.get_digital(DIGITAL_R1)) FLYWHEEL_RUNNING = !FLYWHEEL_RUNNING;
     intake.move_velocity(FLYWHEEL_RUNNING * 200);
+
+
+    */
+
+    
+
 
     
     

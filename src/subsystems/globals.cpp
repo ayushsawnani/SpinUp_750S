@@ -16,10 +16,10 @@ Controller master(CONTROLLER_MASTER);
 
 
 
-Motor leftBack(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
-Motor leftFront(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor leftBack(5, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftFront(6, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor rightFront(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightBack(4, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightBack(4, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 
