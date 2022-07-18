@@ -2,6 +2,7 @@
 
 
 extern Controller master;
+extern Controller extra;
 
 extern Motor leftBack, leftFront, rightBack, rightFront;
 

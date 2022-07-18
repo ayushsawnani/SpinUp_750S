@@ -4,7 +4,6 @@ static bool INTAKE_RUNNING = false;
 static bool FLYWHEEL_RUNNING = false; 
 void setBuildMotors() {
 
-    /*
 
     //In C++, 1 is true and 0 is false
 
@@ -23,6 +22,8 @@ void setBuildMotors() {
     //sets expansion
     expander.move_velocity(master.get_digital(DIGITAL_B) * 200);
 
+    
+
 
     
 
@@ -37,8 +38,12 @@ void setBuildMotors() {
     if (master.get_digital(DIGITAL_R1)) FLYWHEEL_RUNNING = !FLYWHEEL_RUNNING;
     intake.move_velocity(FLYWHEEL_RUNNING * 200);
 
-
-    */
+    int counter = 0;
+    while(true){
+        counter++;
+        lcd::print(1, "%d", counter);
+        Task::delay(5);
+    }
 
     
 

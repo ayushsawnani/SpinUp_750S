@@ -1,7 +1,11 @@
 #include "main.h"
+#include "pros/misc.h"
 #include "pros/motors.h"
 
 Controller master(CONTROLLER_MASTER);
+Controller extra(CONTROLLER_PARTNER);
+
+
 
 
 /*

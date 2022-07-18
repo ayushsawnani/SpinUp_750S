@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pros/rtos.h"
 
 /**
  * A callback function for LLEMU's center button.
@@ -27,6 +28,9 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+	
+
+	
 
 	inertial_sensor.reset();
 }
@@ -47,7 +51,10 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	//LCD auton selector based on tile we are placed on
+	//
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -61,8 +68,11 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+	//get the auton we're gonna run from competition_initialize
+	//pass in the value to an external method
+	//use distance sensors on the robot to locate disks and use the arbitrary value to try and hit goal w/ vis sensor
 
-
+	//skills??
 
 }
 
@@ -80,17 +90,30 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	while(true) {
-		calculateXMotorSpeed();
+	Task driverControlTask(calculateXMotorSpeed, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "driver control");
+		
+
 		//calculateKiwiMotorSpeed();
 
-		setBuildMotors();
+	Task buildMotorTask(setBuildMotors, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "build");
+	// while(true) {
+
+	// 	//run a task that does the turntable angler stuff
+		
+		
+	// 	// //run a task that does this
+	// 	// calculateXMotorSpeed();
+
+	
+
+		
+		
 		
 
 		 
 
-		pros::delay(20);
-	}
+	// 	pros::delay(20);
+	// }
 
 	
 }
