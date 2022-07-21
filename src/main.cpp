@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pros/llemu.hpp"
 #include "pros/rtos.h"
 
 /**
@@ -28,6 +29,12 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
+
+	//set signature for the red goal
+/*
+  	vision_signature_s_t RED_SIG = Vision::signature_from_utility(1, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
+  	vision_sensor.set_signature(1, &RED_SIG); */
 	
 
 	
@@ -68,6 +75,10 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+	//aimbot
+	// Task anglerTask(fixAnglerOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "angler");
+
+	// Task turntableTask(fixTurntableOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "turntable");
 	//get the auton we're gonna run from competition_initialize
 	//pass in the value to an external method
 	//use distance sensors on the robot to locate disks and use the arbitrary value to try and hit goal w/ vis sensor
@@ -90,30 +101,26 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	
+	
+
+	//aimbot
+	//DONT UNCOMMENT
+	/*
+	Task anglerTask(fixAnglerOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "angler");
+
+	Task turntableTask(fixTurntableOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "turntable");
+	*/
+
+
+	//driver
+	//DO NOT TOUCH THIS
 	Task driverControlTask(calculateXMotorSpeed, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "driver control");
-		
-
-		//calculateKiwiMotorSpeed();
-
 	Task buildMotorTask(setBuildMotors, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "build");
-	// while(true) {
-
-	// 	//run a task that does the turntable angler stuff
-		
-		
-	// 	// //run a task that does this
-	// 	// calculateXMotorSpeed();
 
 	
 
-		
-		
-		
-
-		 
-
-	// 	pros::delay(20);
-	// }
+	
 
 	
 }

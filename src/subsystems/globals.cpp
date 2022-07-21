@@ -58,5 +58,10 @@ Motor angler(14, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 //the wheel to shoot out the disk
 Motor flywheel(15, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
+Motor turntable(16, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+
 
 IMU inertial_sensor(20);
+
+//configure vision sensor
+Vision vision_sensor(19);

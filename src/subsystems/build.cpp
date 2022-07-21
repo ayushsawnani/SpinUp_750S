@@ -1,47 +1,42 @@
 #include "main.h"
+#include "pros/rtos.hpp"
 
 static bool INTAKE_RUNNING = false;
 static bool FLYWHEEL_RUNNING = false; 
+
+static int RUNNING = 0;
+
 void setBuildMotors() {
-
-
     //In C++, 1 is true and 0 is false
-
-    //sets the dispenser
-    dispenser.set_value(master.get_digital(DIGITAL_R2));
-
-    //sets the angler motor
-
-    //either will be 1 (up) or -1 (down) * 200 RPM, if both or neither are pressed it is just 0
-
-    angler.move_velocity((master.get_digital(DIGITAL_UP) - master.get_digital(DIGITAL_DOWN) )* 200);
-
-    //set roller motor
-    roller.move_velocity((master.get_digital(DIGITAL_L2) - master.get_digital(DIGITAL_L1) )* 200);
-
-    //sets expansion
-    expander.move_velocity(master.get_digital(DIGITAL_B) * 200);
-
     
+    while(true){ //DONT TOUCH THIS
 
+        //TOGGLING
+        if (master.get_digital(DIGITAL_A)) {
+            RUNNING = !RUNNING;
 
-    
+            //NORMAL DELAY IN CASE YOU WANNA USE
+            delay(200);
+        }    
+        angler.move_velocity(RUNNING * -200);
+        flywheel.move_velocity(RUNNING * 200);
+        lcd::print(1, "RUNNING: %d", RUNNING);
 
+        //PNEUMATICS
+        //either true or false
+        dispenser.set_value(master.get_digital(DIGITAL_R2));
 
-    //1 is true and 0 is false
+        //PRESSING ONE BUTTON TO MOVE
 
-    //toggles intake motors
-    if (master.get_digital(DIGITAL_A)) INTAKE_RUNNING = !INTAKE_RUNNING;
-    intake.move_velocity(INTAKE_RUNNING * 200);
+        //1 * 200 or 0 * 200
+        expander.move_velocity(master.get_digital(DIGITAL_B) * 200);
 
-    //toggles flywheel motors
-    if (master.get_digital(DIGITAL_R1)) FLYWHEEL_RUNNING = !FLYWHEEL_RUNNING;
-    intake.move_velocity(FLYWHEEL_RUNNING * 200);
+        //PRESSING ONE BUTTON TO MOVE FORWARD AND ONE BUTTON TO MOVE BACKWARD
 
-    int counter = 0;
-    while(true){
-        counter++;
-        lcd::print(1, "%d", counter);
+        //1 - 0 * 200, 0 - 1 * 200, 0 - 0 * 200, 1 - 1 * 200
+        roller.move_velocity((master.get_digital(DIGITAL_L2) - master.get_digital(DIGITAL_L1) )* 200);
+        
+        //DIFFERENT FROM THE REGULAR DELAY THIS IS FOR MULTITASKING
         Task::delay(5);
     }
 

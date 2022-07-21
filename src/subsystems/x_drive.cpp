@@ -11,6 +11,8 @@
 #include "main.h"
 #include <cmath>
 
+
+
 void setDrive(int lB, int lF, int rB, int rF) {
 
   /*
@@ -71,7 +73,7 @@ double volted(double velocity) {
 double test(int indicator, double v) { return indicator * (127 - std::abs(v)); }
 
 void calculateXMotorSpeed(void) {
-  while(true) {
+  while(true) { //DONT TOUCH THIS
 
     // calculate the speed of the motors
 
@@ -131,17 +133,20 @@ void calculateXMotorSpeed(void) {
     rB = (volted(getR(lX, lY)) * (d2)) - (volted(rX));
 
     
-    lcd::print(1, "D1: %f", d1);
-    lcd::print(2, "D2: %f", d2);
-    lcd::print(7, "R: %f", getR(lX, lY));
+    
+    // lcd::print(1, "D1: %f", d1);
+    // lcd::print(2, "D2: %f", d2);
+    // lcd::print(7, "R: %f", getR(lX, lY));
 
-    lcd::print(3, "LF: %f", lF);
-    lcd::print(4, "lB: %f", lB);
-    lcd::print(5, "rF: %f", rF);
-    lcd::print(6, "rB: %f", rB);
+    // lcd::print(3, "LF: %f", lF);
+    // lcd::print(4, "lB: %f", lB);
+    // lcd::print(5, "rF: %f", rF);
+    // lcd::print(6, "rB: %f", rB);
 
     //rF is monkey ass idk why
     setDrive(lB, lF, rB, -rF);
+
+    //DO NOT TOUCH THIS DELAY
     Task::delay(20);
   }
 }

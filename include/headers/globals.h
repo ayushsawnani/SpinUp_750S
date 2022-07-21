@@ -14,5 +14,7 @@ extern Motor intake;
 extern Motor roller;
 extern Motor angler;
 extern Motor flywheel;
+extern Motor turntable;
 
 extern IMU inertial_sensor;
+extern Vision vision_sensor;
