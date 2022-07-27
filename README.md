@@ -10,6 +10,8 @@ Our project is created using the **PROS** CLI with the **Visual Studio Code** ed
 
 - Build Drive code
 
+- Aimbot
+
 
 *Upcoming*
 - In-Game Autonomous
