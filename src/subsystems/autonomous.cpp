@@ -1,4 +1,5 @@
 #include "main.h"
+#include <cmath>
 
 void drivePID(void) {
 
@@ -51,4 +52,40 @@ void drivePID(void) {
     
 
     
+}
+
+double distance(double x1, double x2, double y1, double y2){
+    return std::sqrt((y2-y1)*(y2-y1) + (x2-x1)*(x2-x1));
+}
+
+//calculates constant rpm to move from current position to x, y in inches
+static double d_L;
+static double d_R;
+
+static double S_L = 9;
+static double S_R = 9;
+
+
+void calculateOdom(double x_0, double y_0, double theta_0) {
+    
+    double x_1 = x_0/2;
+    double y_1 = y_0/2;
+    
+    double half_angle = atan( (1/tan( (theta_0 * M_PI)/360 ))) * (180/M_PI);
+
+    double mid_d = 0.5 * distance(0, x_0, 0, y_0);
+
+    double b = tan((half_angle * M_PI)/180) * mid_d;
+
+    double radius = sqrt((mid_d)*(mid_d) + b*b);
+
+    double p = (theta_0/180) - 1;
+
+    double radius_r = radius - S_L;
+
+
+    d_R = radius_r * (theta_0 * M_PI/180);
+
+    d_L = (theta_0 * M_PI/180) * (S_L + S_R) + d_R;
+
 }
