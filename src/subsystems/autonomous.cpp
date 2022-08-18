@@ -54,6 +54,8 @@ void drivePID(void) {
     
 }
 
+
+
 double distance(double x1, double x2, double y1, double y2){
     return std::sqrt((y2-y1)*(y2-y1) + (x2-x1)*(x2-x1));
 }
@@ -65,11 +67,11 @@ static double d_R;
 static double S_L = 9;
 static double S_R = 9;
 
-void calculateOdom(double x_0, double y_0, double theta_0) {
+void calculateOdom(double x, double y, double x_0, double y_0, double theta_0) {
     
     double half_angle = atan( (1/tan( (theta_0 * M_PI)/360 ))) * (180/M_PI);
 
-    double mid_d = 0.5 * distance(0, x_0, 0, y_0);
+    double mid_d = 0.5 * distance(x, x_0, y, y_0);
 
     double height = tan((half_angle * M_PI)/180) * mid_d;
 
@@ -81,4 +83,57 @@ void calculateOdom(double x_0, double y_0, double theta_0) {
 
     d_L = (theta_0 * M_PI/180) * (S_L + S_R) + d_R;
 
+}
+
+
+
+void movement_PID(double goal_L, double goal_R){
+    //refer to drivePID for info
+
+    //left side pid
+    double LK_p = 1.0;
+    double LK_d = 1.0;
+    double LK_i = 1.0;
+
+    //right side pid
+    double RK_p = 1.0;
+    double RK_d = 1.0;
+    double RK_i = 1.0;
+
+    double prevOffset_L = 0;
+    double totalOffset_L = 0;
+    double prevOffset_R = 0;
+    double totalOffset_R = 0;
+
+    //double p_L = encoder_L - goal_L
+    //double p_R = encoder_R - goal_R
+
+    //d_L = p_L - prevOffset_L
+    //wait 1 ms
+    //prevOffset_L = p_L
+
+    //d_R = p_R - prevOffset_R
+    //wait 1 ms
+    //prevOffset_RL = p_R
+
+    //if p_L >= -100mm && < 0 then i_L = 0 else i_L += offset
+    //if p_R >= -100mm && < 0 then i_R = 0 else i_R += offset
+    
+
+    //rpm_L = p_L * LK_p + d_L * LK_d + i_L * LK_i
+    //rpm_R = p_R * RK_p + d_R * RK_d + i_R * RK_i
+
+}
+
+void check_current_encoders(){
+    //checks the current position through encoders for L, R, and B
+    
+    //if there is any offset, calculate the new path given new "offsetted" coordinates
+        //otherwise x and y are 0
+
+    //calculate odom with x and y offset
+
+    //save the new position goals and use movement PID to reach those goals
+
+    //this should happen every 10 ms
 }

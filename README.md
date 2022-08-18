@@ -12,11 +12,14 @@ Our project is created using the **PROS** CLI with the **Visual Studio Code** ed
 
 - Aimbot
 
+- PID (theoretical)
+
+- Odometry (theoretical)
+
 
 *Upcoming*
 - In-Game Autonomous
 - Skills
-- Odometry Implementation
 - Winning Worlds
 
 *Contributors*
