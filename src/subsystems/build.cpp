@@ -16,10 +16,10 @@ void setBuildMotors() {
             RUNNING = !RUNNING;
 
             //NORMAL DELAY IN CASE YOU WANNA USE
-            delay(200);
+            delay(500);
         }    
-        angler.move_velocity(RUNNING * -200);
-        flywheel.move_velocity(RUNNING * 200);
+        flywheel_1.move_velocity(RUNNING * 200);
+        flywheel_2.move_velocity(RUNNING * 200);
         lcd::print(1, "RUNNING: %d", RUNNING);
 
         //PNEUMATICS
@@ -29,12 +29,12 @@ void setBuildMotors() {
         //PRESSING ONE BUTTON TO MOVE
 
         //1 * 200 or 0 * 200
-        expander.move_velocity(master.get_digital(DIGITAL_B) * 200);
+        //expander.move_velocity(master.get_digital(DIGITAL_B) * 200);
 
         //PRESSING ONE BUTTON TO MOVE FORWARD AND ONE BUTTON TO MOVE BACKWARD
 
         //1 - 0 * 200, 0 - 1 * 200, 0 - 0 * 200, 1 - 1 * 200
-        roller.move_velocity((master.get_digital(DIGITAL_L2) - master.get_digital(DIGITAL_L1) )* 200);
+        intake_roller.move_velocity((master.get_digital(DIGITAL_L2) - master.get_digital(DIGITAL_L1) )* 200);
         
         //DIFFERENT FROM THE REGULAR DELAY THIS IS FOR MULTITASKING
         Task::delay(5);

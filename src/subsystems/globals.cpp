@@ -46,19 +46,15 @@ Motor expander(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 //pushes the disk to shoot it
 ADIDigitalOut dispenser('A');
 
-//takes in the disks
-Motor intake(12, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
-
-//rolls the color roller
-Motor roller(13, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
-
-//angles the outtake
-Motor angler(14, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+//takes in the disks and ratcheted to intake roller
+Motor intake_roller(12, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //the wheel to shoot out the disk
-Motor flywheel(15, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor flywheel_1(15, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-Motor turntable(16, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor flywheel_2(16, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+
+Motor turntable(17, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 IMU inertial_sensor(20);
