@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pros/adi.hpp"
 
 
 extern Controller master;
@@ -20,3 +21,11 @@ extern Motor turntable;
 
 extern IMU inertial_sensor;
 extern Vision vision_sensor;
+
+extern ADIEncoder encoder_L;
+extern ADIEncoder encoder_R;
+
+extern ADIEncoder encoder_B;
+
+extern Distance frontSensor;
+extern Distance backSensor;

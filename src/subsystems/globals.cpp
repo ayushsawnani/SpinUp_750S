@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pros/adi.hpp"
 #include "pros/misc.h"
 #include "pros/motors.h"
 
@@ -44,7 +45,7 @@ Motor triBottom(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor expander(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //pushes the disk to shoot it
-ADIDigitalOut dispenser('A');
+ADIDigitalOut dispenser('B');
 
 //takes in the disks and ratcheted to intake roller
 Motor intake_roller(12, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
@@ -61,3 +62,12 @@ IMU inertial_sensor(20);
 
 //configure vision sensor
 Vision vision_sensor(19);
+
+//encoders
+//odd port, next highest port, reversed
+ADIEncoder encoder_L('A', 'H', false);
+ADIEncoder encoder_R('C', 'G', false);
+ADIEncoder encoder_B('E', 'F', false);
+
+Distance frontSensor(12);
+Distance backSensor(13);

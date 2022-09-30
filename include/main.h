@@ -77,6 +77,7 @@ void opcontrol(void);
 #include "headers/kiwi_drive.h"
 #include "headers/build.h"
 #include "headers/aimbot.h"
+#include "headers/autonomous.h"
 //#include <iostream>
 #endif
 

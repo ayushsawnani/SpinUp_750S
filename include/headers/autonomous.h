@@ -1,6 +1,6 @@
 #include "main.h"
 
-void drivePID(void);
+void sensorPID(void);
 
 double distance(double x1, double x2, double y1, double y2);
 
