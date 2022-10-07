@@ -1,56 +1,175 @@
 #include "main.h"
+#include "okapi/api/units/QAngle.hpp"
+#include "okapi/impl/chassis/controller/chassisControllerBuilder.hpp"
 #include <cmath>
+
+using namespace okapi;
+
+std::shared_ptr<ChassisController> chassis =
+  ChassisControllerBuilder()
+    .withMotors(
+        1,  // Top left
+        -2, // Top right (reversed)
+        -3, // Bottom right (reversed)
+        4   // Bottom left
+    )
+    // Green gearset, 4 in wheel diam, 11.5 in wheel track
+    .withDimensions(AbstractMotor::gearset::green, {{4_in, 11.5_in}, imev5GreenTPR})
+    .build();
+
+okapi::Motor intake_roller_motor(8);
+
+
+void auton_run1() {
+    int disks_carried = 0;
+
+    Task turntableTask(fixTurntableOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "turntable");
+
+    while (disks_carried < 2) {
+        double closest_disk_heading = 0;
+        double closest_disk = 999999999999999;
+
+        chassis->turnAngleAsync(360_deg);
+
+        if (frontSensor.get() < closest_disk) {
+            closest_disk = frontSensor.get();
+            closest_disk_heading = inertial_sensor.get_heading();
+        }
+        chassis->waitUntilSettled();
+
+        chassis->turnAngle((inertial_sensor.get_heading() - closest_disk_heading) * degree);
+        sensorPID();
+        
+        intake_roller_motor.moveVelocity(200);
+        pros::delay(3000);
+        intake_roller_motor.moveVelocity(0);
+
+        disks_carried ++;
+
+        
+        
+    }
+
+    delay(1);
+    for(int i = 0; i < 3; i++){
+        dispenser.set_value(true);
+        pros::delay(50);
+        dispenser.set_value(false);
+        pros::delay(50);
+    }
+
+
+}
+
+void auton_run2() {
+    int disks_carried = 0;
+
+    //Task turntableTask(fixTurntableOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "turntable");
+
+    while (disks_carried < 2) {
+        double closest_disk_heading = 0;
+        double closest_disk = 999999999999999;
+
+        chassis->turnAngleAsync(360_deg);
+
+        if (frontSensor.get() < closest_disk) {
+            closest_disk = frontSensor.get();
+            closest_disk_heading = inertial_sensor.get_heading();
+        }
+        chassis->waitUntilSettled();
+
+        chassis->turnAngle((inertial_sensor.get_heading() - closest_disk_heading) * degree);
+        sensorPID();
+        
+        intake_roller_motor.moveVelocity(200);
+        pros::delay(3000);
+        intake_roller_motor.moveVelocity(0);
+
+        disks_carried ++;
+
+        
+        
+    }
+
+    delay(1);
+
+    chassis->turnAngle((inertial_sensor.get_heading()) * degree);
+
+
+    for(int i = 0; i < 3; i++){
+        dispenser.set_value(true);
+        pros::delay(50);
+        dispenser.set_value(false);
+        pros::delay(50);
+    }
+
+
+}
 
 void sensorPID(void) {
 
-    //tuning
+    while(true) {
+        //tuning
 
-    //rise time = time it takes to get to the desired value
-    //overshoot = how much farther ur robot goes from the val
-    //settling time = time it takes to settle back to normal after there has been a change
-    //steady state error = the error (if any) when pid is complete
-    //stability = smoothness
-
-
-    //rise time decreases, overshoot increases, steady state error decreases, stability worsens
-    double K_p = 1.0;
-
-    //overshoot decreases, settling time decreases, stability improves IF NOT TOO MUCH
-    double K_d = 1.0;
-
-    //rise time decreases, overshoot increases, settling time increases, steady state error decreases, stability worsens
-    double K_i = 1.0;
-
-    //tune kP until robot oscillates slightly
-    //tune kD until the steady state error decreases to smth normal
-    //tune kI until the steady state error and any disturbances are minimized (can be 0)
-
-    double prevOffset = 0;
-    double totalOffset = 0;
-
-    //goal is to reach 50mm distance for distance sensor
-
-    //wheel diameter is ___ cm
-    
-
-    //calculate current offset (p)
-    //p = current distance sensor reading - 50mm
-
-    //calculate rate of change (d) (when oscillating around value) so we can speed up or slow down a bit
-    //d = offset - prev offset
-    //wait 1 ms
-    //prev offset = offset
+        //rise time = time it takes to get to the desired value
+        //overshoot = how much farther ur robot goes from the val
+        //settling time = time it takes to settle back to normal after there has been a change
+        //steady state error = the error (if any) when pid is complete
+        //stability = smoothness
 
 
-    //calculate total offset (i) (any remaining error) only if error is less than or equal to 0 and if the error is small
-    //if error >= 100mm or smth then i = 0
-    //else i += offset
-    
+        //rise time decreases, overshoot increases, steady state error decreases, stability worsens
+        double K_p = 1.0;
 
-    //pid = p * kp + i * ki + d * kd
-    
-    
+        //overshoot decreases, settling time decreases, stability improves IF NOT TOO MUCH
+        double K_d = 1.0;
 
+        //rise time decreases, overshoot increases, settling time increases, steady state error decreases, stability worsens
+        double K_i = 1.0;
+
+        //tune kP until robot oscillates slightly
+        //tune kD until the steady state error decreases to smth normal
+        //tune kI until the steady state error and any disturbances are minimized (can be 0)
+
+        double prevOffset = 0;
+
+        //goal is to reach 50mm distance for distance sensor
+
+        //wheel diameter is 4 inches
+        
+
+        //calculate current offset (p)
+        double p = frontSensor.get() - 50;
+        if (std::abs(p) < 10) {
+            leftBack.move_velocity(0);
+            leftFront.move_velocity(0);
+            rightBack.move_velocity(0);
+            rightFront.move_velocity(0);
+            break;
+        }
+        
+
+        //calculate rate of change (d) (when oscillating around value) so we can speed up or slow down a bit
+        double d = p - prevOffset;
+        delay(2);
+        prevOffset = p;
+
+
+        //calculate total offset (i) (any remaining error) only if error is less than or equal to 0 and if the error is small
+        //if error >= 100mm or smth then i = 0
+        int i = 0;
+        if (p <= 100) i += p;
+        
+
+        //pid = p * kp + i * ki + d * kd
+
+        double speed = p * K_p + i * K_i + d * K_d;
+
+        leftBack.move_velocity(speed);
+        leftFront.move_velocity(speed);
+        rightBack.move_velocity(speed);
+        rightFront.move_velocity(speed);
+    }
     
 }
 

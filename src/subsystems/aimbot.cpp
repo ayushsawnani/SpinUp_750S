@@ -17,8 +17,8 @@ void fixTurntableOffset(void) {
 
         //we're going to have to tune it based on how slow/fast it turns
         
-        double K_t = leftBack.get_target_velocity()/10.0; //make it relative to the speed of the robot
-
+        double K_t = (leftBack.get_actual_velocity() + leftFront.get_actual_velocity() + rightBack.get_actual_velocity() + rightFront.get_actual_velocity())/40.0; //make it relative to the speed of the robot
+        lcd::print(2, "Constant: %f", K_t);
 
         turntable.move_velocity(offset * K_t);
         Task::delay(1);
