@@ -40,6 +40,8 @@ void initialize() {
 	
 
 	inertial_sensor.reset();
+
+	
 }
 
 /**
@@ -75,6 +77,12 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+
+	//auton
+	//auton_run2();
+
+	auton_run3();
+
 	//aimbot
 	// Task anglerTask(fixAnglerOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "angler");
 
@@ -117,6 +125,9 @@ void opcontrol() {
 	//DO NOT TOUCH THIS
 	Task driverControlTask(calculateXMotorSpeed, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "driver control");
 	Task buildMotorTask(setBuildMotors, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "build");
+	//Task flywheelTask(print_flywheel_stuff, TASK_PRIORITY_MIN, TASK_STACK_DEPTH_DEFAULT, "flywheelprinty");
+
+	//auton_run2();
 
 	
 

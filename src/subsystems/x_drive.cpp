@@ -13,6 +13,12 @@
 
 
 
+using namespace okapi;
+
+
+
+
+
 void setDrive(int lB, int lF, int rB, int rF) {
 
   /*
@@ -72,6 +78,7 @@ double volted(double velocity) {
 
 double test(int indicator, double v) { return indicator * (127 - std::abs(v)); }
 
+
 void calculateXMotorSpeed(void) {
   while(true) { //DONT TOUCH THIS
 
@@ -84,12 +91,6 @@ void calculateXMotorSpeed(void) {
     double lX = master.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
     double rX = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
-    // calculates inertial sensor rotation about the z axis
-    double rotation = inertial_sensor.get_rotation();
-    lcd::print(0, "rotation: %f", rotation);
-
-    // determines which side of the robot is facing forward (away from driver)
-    int pointer = (int)rotation / 90;
 
     double lF, lB, rF, rB;
 
@@ -97,14 +98,14 @@ void calculateXMotorSpeed(void) {
 
     // POWER EQUATION
     /*
-    this is inneficient because while we are getting 1.4 times the speed of
+    this is inneficient because QQ while we are getting 1.4 times the speed of
     an x drive moving forward, left, back, and right, we are only getting 
     1 times the speed moving diagonally. therefore we have found another solution. 
     */
-    lF = lY + lX + rX;
-    lB = lY - lX + rX;
-    rF = -lY + lX + rX;
-    rB = -lY - lX + rX;
+    // lF = lY + lX + rX;
+    // lB = lY - lX + rX;
+    // rF = -lY + lX + rX;
+    // rB = -lY - lX + rX;
 
 
     //DIRECTIONAL CONTROL
@@ -112,7 +113,7 @@ void calculateXMotorSpeed(void) {
     // values for setting the motors
     double d1 = getDiag1(getTheta(lX, lY));
     double d2 = getDiag2(getTheta(lX, lY));
-    double max = std::max(d1, d2);
+    double max = std::max(d1, d2) * sqrt(d1*d1 + d2*d2);
 
     // diagional/max caps the max coefficient to 1 instead of a really small
     // difference
@@ -127,10 +128,11 @@ void calculateXMotorSpeed(void) {
     we chose not to have turn importance as we are mainly strafing around the field for driver control
     turn importance is R - rX
     */
-    lF = (volted(getR(lX, lY)) * (d2)) + (volted(rX));
-    lB = (volted(getR(lX, lY)) * (d1)) + (volted(rX));
-    rF = (volted(getR(lX, lY)) * (d1)) - (volted(rX));
-    rB = (volted(getR(lX, lY)) * (d2)) - (volted(rX));
+    // acc value * diagonal damp + rx
+    lF = (volted(getR(lX, lY)) * (d2)) - (volted(rX));
+    lB = (volted(getR(lX, lY)) * (d1)) - (volted(rX));
+    rF = (volted(getR(lX, lY)) * (d1)) + (volted(rX));
+    rB = (volted(getR(lX, lY)) * (d2)) + (volted(rX));
 
     
     
@@ -143,10 +145,77 @@ void calculateXMotorSpeed(void) {
     // lcd::print(5, "rF: %f", rF);
     // lcd::print(6, "rB: %f", rB);
 
-    //rF is monkey ass idk why
+    //rF is monkey ass idk why and lF
     setDrive(lB, lF, rB, -rF);
 
     //DO NOT TOUCH THIS DELAY
     Task::delay(20);
   }
+}
+
+//these parameters are WITHOUT volted
+void calculate_final_pos(double max) {
+
+  /*
+  
+    |    |
+
+    |    |
+
+    i don't know if this is the actual or theoretical movement
+
+    if it is the theoretical ima change
+  
+  */
+
+  
+  double T = atan2(position_y, position_x);
+  double Cx = cos(T)/max;
+  double Cy = sin(T)/max;
+
+  position_x += Cx;
+
+
+
+  
+}
+
+//must have inertial sensor
+void turn_drive(double desired_angle){
+  double prev_offset = 0;
+  double kp = 1;
+  double kd = 1;
+  while (std::abs(inertial_sensor.get_heading() - desired_angle) < 2){
+    double p = inertial_sensor.get_heading() - desired_angle;
+
+    double d = p - prev_offset;
+
+    pros::delay(1);
+
+    prev_offset = p;
+
+    double speed = p * kp + d * kd;
+
+    double lF = (speed);
+    double lB = (speed);
+    double rF = (-speed);
+    double rB = (speed);
+    lcd::print(4, "%f, %f, %f, %f", lB, lF, rB, -rF);
+    setDrive(lB, lF, rB, -rF);
+  }
+}
+
+//finds the goal
+void find_goal() {
+
+  //we need to find the goal x and y values 
+
+
+  //distance formula
+
+  double angle = (atan2(goal_posy - position_y,goal_posx- position_x) < 0 ? atan2(goal_posy - position_y, goal_posx - position_x) + 360 : atan2(goal_posy - position_y, goal_posx - position_x));
+  
+  turn_drive(angle);
+  
+
 }

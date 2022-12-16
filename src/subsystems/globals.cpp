@@ -21,10 +21,10 @@ Controller extra(CONTROLLER_PARTNER);
 
 
 
-Motor leftBack(5, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor leftFront(6, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightFront(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightBack(4, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor leftBack(20, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftFront(11, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightFront(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightBack(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 
@@ -36,7 +36,7 @@ Motor rightBack(4, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
         __
 */
 
-Motor triLeft(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor triLeft(11, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 Motor triRight(2, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor triBottom(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 
@@ -45,29 +45,44 @@ Motor triBottom(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor expander(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //pushes the disk to shoot it
-ADIDigitalOut dispenser('B');
+ADIDigitalOut dispenser('H');
+
+Motor dispenser2(12, MOTOR_GEARSET_18);
+
 
 //takes in the disks and ratcheted to intake roller
-Motor intake_roller(12, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor intake_roller(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //the wheel to shoot out the disk
-Motor flywheel_1(15, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor flywheel_1(3 , MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-Motor flywheel_2(16, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+//Motor flywheel_2(16, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-Motor turntable(17, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+//Motor turntable(17, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
-IMU inertial_sensor(20);
+IMU inertial_sensor(19);
 
 //configure vision sensor
-Vision vision_sensor(19);
+Vision disk_vision_sensor(12);
+Vision roller_vision_sensor(11);
 
 //encoders
 //odd port, next highest port, reversed
-ADIEncoder encoder_L('A', 'H', false);
+ADIEncoder encoder_L('A', 'B', false);
 ADIEncoder encoder_R('C', 'G', false);
 ADIEncoder encoder_B('E', 'F', false);
 
-Distance frontSensor(12);
+//motors as encoders
+Motor encoderL(1, MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor encoderR(1, MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor encoderS(1, MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+
+Distance frontSensor(19);
 Distance backSensor(13);
+
+int position_x = 0;
+int position_y = 0;
+
+int goal_posx = 0;
+int goal_posy = 0;

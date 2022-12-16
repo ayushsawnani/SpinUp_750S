@@ -11,6 +11,7 @@ extern Motor triLeft, triRight, triBottom;
 
 //extern Motor expander;
 extern ADIDigitalOut dispenser; //pneumatics
+extern Motor dispenser2;
 
 extern Motor intake_roller;
 
@@ -20,7 +21,8 @@ extern Motor flywheel_2;
 extern Motor turntable;
 
 extern IMU inertial_sensor;
-extern Vision vision_sensor;
+extern Vision disk_vision_sensor;
+extern Vision roller_vision_sensor;
 
 extern ADIEncoder encoder_L;
 extern ADIEncoder encoder_R;
@@ -29,3 +31,12 @@ extern ADIEncoder encoder_B;
 
 extern Distance frontSensor;
 extern Distance backSensor;
+
+extern Motor encoderL;
+extern Motor encoderR;
+extern Motor encoderS;
+
+extern int position_x;
+extern int position_y;
+extern int goal_posx;
+extern int goal_posy;

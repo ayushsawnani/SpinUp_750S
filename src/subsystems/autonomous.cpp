@@ -8,22 +8,67 @@ using namespace okapi;
 std::shared_ptr<ChassisController> chassis =
   ChassisControllerBuilder()
     .withMotors(
-        1,  // Top left
-        -2, // Top right (reversed)
-        -3, // Bottom right (reversed)
-        4   // Bottom left
+        20,  // Top left
+        11, // Top right (reversed)
+        -1, // Bottom right (reversed)
+        10   // Bottom left
     )
     // Green gearset, 4 in wheel diam, 11.5 in wheel track
-    .withDimensions(AbstractMotor::gearset::green, {{4_in, 11.5_in}, imev5GreenTPR})
+    .withDimensions(AbstractMotor::gearset::green, {{18_in, 18_in}, imev5GreenTPR})
     .build();
 
-okapi::Motor intake_roller_motor(8);
+okapi::Motor intake_roller_motor(2);
+okapi::Motor dispenser_motor(10);
+okapi::Motor flywheel_motor(20);
 
+//calculates constant rpm to move from current position to x, y in inches
+static double d_L;
+static double d_R;
+
+static double S_L = 9;
+static double S_R = 9;
+
+static double prevL = 0, prevR = 0, prevS = 0;
+
+static double L = 0, R = 0, S = 0;
+static double prevTheta = 0;
+
+static double wheel_size = 3.25;
+void calculateCurrentPosition() {
+    double cL = encoderL.get_position();
+    double cR = encoderR.get_position();
+    double cS = encoderS.get_position();
+    //follow the algorithm
+    double dL = (cL - prevL) * wheel_size;
+    double dR = (cR - prevR) * wheel_size;
+    double dS = (cS - prevS) * wheel_size;
+    pros::delay(2);
+    prevL = cL;
+    prevR = cR;
+    prevS = cS;
+
+    L += dL;
+    R += dR;
+    S += dS;
+
+    double dTheta = ((L-R)/(S_L + S_R)) - prevTheta;
+
+    //gotta threshold this
+    double x = 0;
+    double y = 0;
+    double heading = 0;
+    if (dTheta == 0) {
+        
+    } else {
+        
+    }
+    
+}
 
 void auton_run1() {
     int disks_carried = 0;
 
-    Task turntableTask(fixTurntableOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "turntable");
+    //Task turntableTask(fixTurntableOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "turntable");
 
     while (disks_carried < 2) {
         double closest_disk_heading = 0;
@@ -61,7 +106,75 @@ void auton_run1() {
 
 }
 
+void shauton() {
+
+    inertial_sensor.reset();
+    while (inertial_sensor.is_calibrating()) {
+		lcd::print(2, "calibrating");
+	}
+    lcd::clear_line(2);
+
+    chassis->setMaxVelocity(150);
+    
+
+    
+}
+
+void move_drive(int ms, int vel) {
+    leftBack.move_velocity(vel);
+    leftFront.move_velocity(vel);
+    rightBack.move_velocity(vel);
+    rightFront.move_velocity(-vel);
+    pros::delay(ms);
+    leftBack.move_velocity(0);
+    leftFront.move_velocity(0);
+    rightBack.move_velocity(0);
+    rightFront.move_velocity(0);
+}
+
+void angle_drive(int deg, int vel) {
+
+    while (inertial_sensor.get_heading() >= deg + 1 || inertial_sensor.get_heading() <= deg - 1 ) {
+        lcd::print(2, "%f %f %f", (inertial_sensor.get_heading() - deg), deg, inertial_sensor.get_heading() );
+            leftBack.move_velocity((inertial_sensor.get_heading() - deg) * vel);
+            leftFront.move_velocity((inertial_sensor.get_heading() - deg) * vel);
+            rightBack.move_velocity((inertial_sensor.get_heading() - deg) * -vel);
+            rightFront.move_velocity((inertial_sensor.get_heading() - deg) * vel);
+    }
+    
+
+}
+
+void auton_run3() {
+    inertial_sensor.reset();
+    while (inertial_sensor.is_calibrating()) {
+		lcd::print(2, "calibrating");
+	}
+	lcd::clear_line(2);
+    intake_roller_motor.moveVelocity(200);
+    pros::delay(2000);
+    intake_roller_motor.moveVelocity(0);
+    pros::delay(10);
+    move_drive(200, 100);
+    angle_drive(90, 20);
+    
+    // //chassis->waitUntilSettled();
+    // chassis->setMaxVelocity(100);
+    // chassis->moveDistance(10_ft);
+    // chassis->waitUntilSettled();
+    // chassis->turnAngle(200_deg);
+    // chassis->waitUntilSettled();
+    // chassis->moveDistance(500_ft);
+    // chassis->waitUntilSettled();
+}
+
+
 void auton_run2() {
+    inertial_sensor.reset();
+    while (inertial_sensor.is_calibrating()) {
+		lcd::print(2, "calibrating");
+	}
+	lcd::clear_line(2);
     int disks_carried = 0;
 
     //Task turntableTask(fixTurntableOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "turntable");
@@ -70,18 +183,22 @@ void auton_run2() {
         double closest_disk_heading = 0;
         double closest_disk = 999999999999999;
 
-        chassis->turnAngleAsync(360_deg);
+        chassis->setMaxVelocity(25);
+        
+        chassis->turnAngle(180_deg);
 
         if (frontSensor.get() < closest_disk) {
             closest_disk = frontSensor.get();
             closest_disk_heading = inertial_sensor.get_heading();
         }
         chassis->waitUntilSettled();
+        lcd::print(1, "%f, %f", closest_disk_heading, closest_disk);
 
         chassis->turnAngle((inertial_sensor.get_heading() - closest_disk_heading) * degree);
         sensorPID();
         
         intake_roller_motor.moveVelocity(200);
+        chassis->moveDistanceAsync(2_m);
         pros::delay(3000);
         intake_roller_motor.moveVelocity(0);
 
@@ -179,12 +296,7 @@ double distance(double x1, double x2, double y1, double y2){
     return std::sqrt((y2-y1)*(y2-y1) + (x2-x1)*(x2-x1));
 }
 
-//calculates constant rpm to move from current position to x, y in inches
-static double d_L;
-static double d_R;
 
-static double S_L = 9;
-static double S_R = 9;
 
 void calculateOdom(double x, double y, double x_0, double y_0, double theta_0) {
     
