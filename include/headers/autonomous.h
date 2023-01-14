@@ -8,7 +8,14 @@ void auton_run1();
 
 void auton_run2();
 
-void auton_run3();
+void double_roller_auton();
+
+void single_rollerL_auton();
+
+void single_rollerR_auton();
+
+void skills();
+
 
 double distance(double x1, double x2, double y1, double y2);
 

@@ -58,7 +58,15 @@ Motor flywheel_1(3 , MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //Motor flywheel_2(16, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-//Motor turntable(17, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor turntable(17, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+
+Motor lift(17, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+
+ADIDigitalOut endgame('H');
+
+
+Motor endgame3000('A');
+
 
 
 IMU inertial_sensor(19);

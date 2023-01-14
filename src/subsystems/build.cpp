@@ -8,6 +8,8 @@ static bool FLYWHEEL_RUNNING = false;
 static int RUNNING_FLYWHEEL = 0;
 static int RUNNING_INTAKE = 0;
 
+static int running_endgame = 0;
+
 static int SHABALO = 0;
 
 static bool printint_controller = false;
@@ -67,22 +69,28 @@ void setBuildMotors() {
         //PNEUMATICS
         //either true or false
         if (master.get_digital(DIGITAL_A)) {
-            //dispenser.set_value(true);
-            dispenser2.move_velocity(200);
+            dispenser.set_value(true);
+            //dispenser2.move_velocity(200);
 
             //NORMAL DELAY IN CASE YOU WANNA USE
-            pros::delay(950);
-            dispenser2.move_velocity(0);
-            pros::delay(5);
-            dispenser2.move_velocity(-200);
-            pros::delay(200);
-            dispenser2.move_velocity(0);
+            // pros::delay(950);
+            // dispenser2.move_velocity(0);
+            // pros::delay(5);
+            // dispenser2.move_velocity(-200);
+            // pros::delay(200);
+            // dispenser2.move_velocity(0);
 
-            //dispenser.set_value(false);
+            pros::delay(550);
+
+            dispenser.set_value(false);
         }  
 
         if (master.get_digital(DIGITAL_R1)) {
             RUNNING_FLYWHEEL = !RUNNING_FLYWHEEL;
+            pros::delay(250);
+        }
+        if (master.get_digital(DIGITAL_UP)) {
+            running_endgame = !running_endgame;
             pros::delay(250);
         }
 
@@ -92,7 +100,9 @@ void setBuildMotors() {
  
         flywheel_1.move_velocity(RUNNING_FLYWHEEL * -600);
 
-        intake_roller.move_velocity((master.get_digital(DIGITAL_L2) - master.get_digital(DIGITAL_L1)) * 200);
+        endgame.set_value(running_endgame);
+
+        intake_roller.move_velocity((master.get_digital(DIGITAL_L1) - master.get_digital(DIGITAL_L2)) * 200);
 
 
 
@@ -100,13 +110,12 @@ void setBuildMotors() {
 
         //1 - 0 * 200, 0 - 1 * 200, 0 - 0 * 200, 1 - 1 * 200
 
-        //PARTNER
-        /*turntable.move_velocity((extra.get_digital(DIGITAL_L1) - extra.get_digital(DIGITAL_R1)) * 100);
+        turntable.move_velocity((master.get_digital(DIGITAL_LEFT) - master.get_digital(DIGITAL_RIGHT)) * 200);
+
+        lift.move_velocity((master.get_digital(DIGITAL_X) - master.get_digital(DIGITAL_RIGHT)) * 200);
 
 
-        
 
-         */
         
         //DIFFERENT FROM THE REGULAR DELAY THIS IS FOR MULTITASKING
         Task::delay(5);

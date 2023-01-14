@@ -11,12 +11,18 @@ extern Motor triLeft, triRight, triBottom;
 
 //extern Motor expander;
 extern ADIDigitalOut dispenser; //pneumatics
+
+extern ADIDigitalOut endgame;
+
+
 extern Motor dispenser2;
 
 extern Motor intake_roller;
 
 extern Motor flywheel_1;
 extern Motor flywheel_2;
+
+extern Motor lift;
 
 extern Motor turntable;
 

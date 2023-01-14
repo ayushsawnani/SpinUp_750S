@@ -78,20 +78,12 @@ void competition_initialize() {
  */
 void autonomous() {
 
-	//auton
-	//auton_run2();
-
-	auton_run3();
-
-	//aimbot
-	// Task anglerTask(fixAnglerOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "angler");
-
-	// Task turntableTask(fixTurntableOffset, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "turntable");
-	//get the auton we're gonna run from competition_initialize
-	//pass in the value to an external method
-	//use distance sensors on the robot to locate disks and use the arbitrary value to try and hit goal w/ vis sensor
-
-	//skills??
+	//AUTON
+	//double_roller_auton();
+	single_rollerL_auton();
+	//single_rollerR_auton();
+	//skills();
+	
 
 }
 
@@ -109,6 +101,17 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+
+
+
+
+
+
+
+	bool frightened = true;
+
+
+	
 	
 	
 
