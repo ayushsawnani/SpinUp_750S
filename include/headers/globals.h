@@ -12,6 +12,8 @@ extern Motor triLeft, triRight, triBottom;
 //extern Motor expander;
 extern ADIDigitalOut dispenser; //pneumatics
 
+extern Motor endgame3000;
+
 extern ADIDigitalOut endgame;
 
 

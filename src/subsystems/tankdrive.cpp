@@ -28,7 +28,7 @@ void move_drive_tank(void) {
         int rB = lY - rX;
         int rF = lY - rX;
 
-        setDrive(voltage(lB), -voltage(lF), -voltage(rB), -voltage(rF));
+        setDrive(voltage(lB), -voltage(lF), voltage(rB), voltage(rF));
         Task::delay(5);
     }
 

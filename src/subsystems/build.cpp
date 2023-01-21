@@ -11,6 +11,8 @@ static int RUNNING_INTAKE = 0;
 
 static int running_endgame = 0;
 
+static int running_indexer = 0;
+
 static int SHABALO = 0;
 
 static bool printint_controller = false;
@@ -24,8 +26,7 @@ void setBuildMotors() {
     while(true){ //DONT TOUCH THIS
         //MASTER
         //TOGGLING
-        //intake   
-        dispenser.set_value(false);
+
 
 
 
@@ -69,31 +70,23 @@ void setBuildMotors() {
 
         //PNEUMATICS
         //either true or false
-        if (master.get_digital(DIGITAL_A)) {
-            dispenser.set_value(true);
-            //dispenser2.move_velocity(200);
+        
 
-            //NORMAL DELAY IN CASE YOU WANNA USE
-            // pros::delay(950);
-            // dispenser2.move_velocity(0);
-            // pros::delay(5);
-            // dispenser2.move_velocity(-200);
-            // pros::delay(200);
-            // dispenser2.move_velocity(0);
-
-            pros::delay(550);
-
-            dispenser.set_value(false);
-        }  
 
         if (master.get_digital(DIGITAL_R1)) {
             RUNNING_FLYWHEEL = !RUNNING_FLYWHEEL;
             pros::delay(250);
         }
-        if (extra.get_digital(DIGITAL_UP)) {
-            running_endgame = !running_endgame;
+        if (extra.get_digital(DIGITAL_X)) {
+            running_endgame = true;
             pros::delay(250);
         }
+        if (master.get_digital(DIGITAL_A)) {
+            running_indexer = !running_indexer;
+            pros::delay(250);
+        }
+
+        dispenser.set_value(running_indexer);
 
         
 
@@ -111,11 +104,11 @@ void setBuildMotors() {
 
         //1 - 0 * 200, 0 - 1 * 200, 0 - 0 * 200, 1 - 1 * 200
 
-        turntable.move_velocity((extra.get_digital(DIGITAL_LEFT) - extra.get_digital(DIGITAL_RIGHT)) * 200);
+        turntable.move_velocity(extra.get_analog(E_CONTROLLER_ANALOG_LEFT_X));
 
         lift.set_brake_mode(MOTOR_BRAKE_HOLD);
 
-        lift.move_velocity((master.get_digital(DIGITAL_X) - master.get_digital(DIGITAL_RIGHT)) * 200);
+        lift.move_velocity((master.get_digital(DIGITAL_UP) - master.get_digital(DIGITAL_DOWN)) * 100);
 
 
 

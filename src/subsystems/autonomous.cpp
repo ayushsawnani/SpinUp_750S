@@ -6,7 +6,7 @@
 using namespace okapi;
 
 std::shared_ptr<ChassisController> chassis =
-  ChassisControllerBuilder()
+  ChassisControllerBuilder() 
     .withMotors(
         20,  // Top left
         11, // Top right (reversed)
@@ -213,9 +213,9 @@ void p_controller(int in, int vel) {
 
     while (goal > leftBack.get_position()) {
         leftBack.move_velocity((goal - leftBack.get_position()) * vel);
-        leftFront.move_velocity((goal - leftBack.get_position()) * vel);
+        leftFront.move_velocity((goal - leftBack.get_position()) * -vel);
         rightBack.move_velocity((goal - leftBack.get_position()) * vel);
-        rightFront.move_velocity((goal - leftBack.get_position()) * -vel);
+        rightFront.move_velocity((goal - leftBack.get_position()) * vel);
 
     }
 
@@ -244,9 +244,9 @@ void move_drive1(int in, int vel) {
 }
 void move_drive(int ms, int vel) {
     leftBack.move_velocity(vel);
-    leftFront.move_velocity(vel);
+    leftFront.move_velocity(-vel);
     rightBack.move_velocity(vel);
-    rightFront.move_velocity(-vel);
+    rightFront.move_velocity(vel);
     pros::delay(ms);
     leftBack.move_velocity(0);
     leftFront.move_velocity(0);
@@ -256,9 +256,9 @@ void move_drive(int ms, int vel) {
 
 void angle_drive(int ms, int vel) {
     leftBack.move_velocity(vel);
-    leftFront.move_velocity(vel);
+    leftFront.move_velocity(-vel);
     rightBack.move_velocity(-vel);
-    rightFront.move_velocity(vel);
+    rightFront.move_velocity(-vel);
     pros::delay(ms);
     leftBack.move_velocity(0);
     leftFront.move_velocity(0);
@@ -277,9 +277,9 @@ void angle_drive1(int deg, int vel) {
     while (true ) {
         lcd::print(2, "%f %f %f", (deg - inertial_sensor.get_heading()), deg, inertial_sensor.get_heading());
         leftBack.move_velocity((deg - inertial_sensor.get_heading()) * vel);
-        leftFront.move_velocity((deg - inertial_sensor.get_heading()) * vel);
+        leftFront.move_velocity((deg - inertial_sensor.get_heading()) * -vel);
         rightBack.move_velocity((deg - inertial_sensor.get_heading()) * -vel);
-        rightFront.move_velocity((deg - inertial_sensor.get_heading()) * vel);
+        rightFront.move_velocity((deg - inertial_sensor.get_heading()) * -vel);
 
         if (abs(deg - inertial_sensor.get_heading()) < 5) break;
     }
@@ -289,17 +289,22 @@ void angle_drive1(int deg, int vel) {
 
 //40 pts
 void skills() {
-    move_drive(500, -100);
+    move_drive(500, 100);
 	lcd::clear_line(2);
-    intake_roller_motor.moveVelocity(-400);
-    pros::delay(400);
-    intake_roller_motor.moveVelocity(0);
+    intake_roller.move_velocity(-400);
+    pros::delay(500);
+    intake_roller.move_velocity(0);
     pros::delay(10);
+    move_drive(250, -100);
+    //p_controller(25,100);
+
+
+    
     p_controller(50,100);
 
     //angles to other roller
     angle_drive(1800, -50);
-    move_drive(1200, -100);
+    move_drive(1200, 100);
 	lcd::clear_line(2);
     intake_roller_motor.moveVelocity(-400);
     pros::delay(400);
@@ -309,7 +314,7 @@ void skills() {
     //moves to other side
     p_controller(315,100);
     angle_drive(1500, -50);
-    move_drive(1500, -200);
+    move_drive(1500, 200);
     intake_roller_motor.moveVelocity(-400);
     pros::delay(200);
     intake_roller_motor.moveVelocity(0);
@@ -319,8 +324,8 @@ void skills() {
     angle_drive(1500, -50);
     move_drive(1200, -100);
 	lcd::clear_line(2);
-    intake_roller_motor.moveVelocity(-200);
-    pros::delay(200);
+    intake_roller_motor.moveVelocity(-400);
+    pros::delay(500);
     intake_roller_motor.moveVelocity(0);
     pros::delay(10);
 
@@ -335,37 +340,39 @@ void skills() {
 }
 
 void single_rollerL_auton() {
-    move_drive(500, -100);
+    move_drive(500, 100);
 	lcd::clear_line(2);
-    intake_roller_motor.moveVelocity(-200);
-    pros::delay(200);
-    intake_roller_motor.moveVelocity(0);
+    intake_roller.move_velocity(-400);
+    pros::delay(500);
+    intake_roller.move_velocity(0);
     pros::delay(10);
-    move_drive(250, 100);
+    move_drive(250, -100);
     //p_controller(25,100);
+
+
     pros::delay(1);
-    angle_drive(2000, -50);
-    flywheel_motor.moveVelocity(-600);
-    pros::delay(3000);
-    dispenser2.move_velocity(200);
+    angle_drive(2000, 50);
+    // flywheel_motor.moveVelocity(-600);
+    // pros::delay(3000);
+    // dispenser2.move_velocity(200);
 
-    //NORMAL DELAY IN CASE YOU WANNA USE
-    pros::delay(1500);
-    dispenser2.move_velocity(0);
-    pros::delay(5);
-    dispenser2.move_velocity(-200);
-    pros::delay(200);
-    dispenser2.move_velocity(0);
-    pros::delay(100);
-    dispenser2.move_velocity(200);
+    // //NORMAL DELAY IN CASE YOU WANNA USE
+    // pros::delay(1500);
+    // dispenser2.move_velocity(0);
+    // pros::delay(5);
+    // dispenser2.move_velocity(-200);
+    // pros::delay(200);
+    // dispenser2.move_velocity(0);
+    // pros::delay(100);
+    // dispenser2.move_velocity(200);
 
-    pros::delay(1500);
-    dispenser2.move_velocity(200);
-    dispenser2.move_velocity(0);
-    pros::delay(5);
-    dispenser2.move_velocity(-200);
-    pros::delay(200);
-    dispenser2.move_velocity(0);
+    // pros::delay(1500);
+    // dispenser2.move_velocity(200);
+    // dispenser2.move_velocity(0);
+    // pros::delay(5);
+    // dispenser2.move_velocity(-200);
+    // pros::delay(200);
+    // dispenser2.move_velocity(0);
 
 
 }

@@ -21,10 +21,10 @@ Controller extra(CONTROLLER_PARTNER);
 
 
 
-Motor leftBack(10, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor leftFront(2, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightFront(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightBack(9, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor leftBack(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftFront(9, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightFront(20, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightBack(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 
@@ -66,7 +66,6 @@ ADIDigitalOut endgame('H');
 
 
 Motor endgame3000('A');
-
 
 
 IMU inertial_sensor(19);
