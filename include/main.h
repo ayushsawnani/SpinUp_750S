@@ -78,6 +78,7 @@ void opcontrol(void);
 #include "headers/build.h"
 #include "headers/aimbot.h"
 #include "headers/autonomous.h"
+#include "headers/tankdrive.h"
 //#include <iostream>
 #endif
 

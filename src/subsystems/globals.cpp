@@ -21,10 +21,10 @@ Controller extra(CONTROLLER_PARTNER);
 
 
 
-Motor leftBack(20, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor leftFront(11, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftBack(10, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftFront(2, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor rightFront(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightBack(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor rightBack(9, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 
@@ -45,22 +45,22 @@ Motor triBottom(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor expander(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //pushes the disk to shoot it
-ADIDigitalOut dispenser('H');
+ADIDigitalOut dispenser('E');
 
 Motor dispenser2(12, MOTOR_GEARSET_18);
 
 
 //takes in the disks and ratcheted to intake roller
-Motor intake_roller(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor intake_roller(8, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //the wheel to shoot out the disk
-Motor flywheel_1(3 , MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor flywheel_1(4, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //Motor flywheel_2(16, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-Motor turntable(17, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor turntable(3, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-Motor lift(17, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor lift(11, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 ADIDigitalOut endgame('H');
 

@@ -126,7 +126,7 @@ void opcontrol() {
 
 	//driver
 	//DO NOT TOUCH THIS
-	Task driverControlTask(calculateXMotorSpeed, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "driver control");
+	Task driverControlTask(move_drive_tank, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "driver control");
 	Task buildMotorTask(setBuildMotors, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "build");
 	//Task flywheelTask(print_flywheel_stuff, TASK_PRIORITY_MIN, TASK_STACK_DEPTH_DEFAULT, "flywheelprinty");
 

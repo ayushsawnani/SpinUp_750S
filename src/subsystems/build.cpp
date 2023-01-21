@@ -1,5 +1,6 @@
 #include "main.h"
 #include "pros/misc.h"
+#include "pros/motors.h"
 #include "pros/rtos.hpp"
 
 static bool INTAKE_RUNNING = false;
@@ -89,7 +90,7 @@ void setBuildMotors() {
             RUNNING_FLYWHEEL = !RUNNING_FLYWHEEL;
             pros::delay(250);
         }
-        if (master.get_digital(DIGITAL_UP)) {
+        if (extra.get_digital(DIGITAL_UP)) {
             running_endgame = !running_endgame;
             pros::delay(250);
         }
@@ -98,7 +99,7 @@ void setBuildMotors() {
 
 
  
-        flywheel_1.move_velocity(RUNNING_FLYWHEEL * -600);
+        flywheel_1.move_velocity(RUNNING_FLYWHEEL * 600);
 
         endgame.set_value(running_endgame);
 
@@ -110,7 +111,9 @@ void setBuildMotors() {
 
         //1 - 0 * 200, 0 - 1 * 200, 0 - 0 * 200, 1 - 1 * 200
 
-        turntable.move_velocity((master.get_digital(DIGITAL_LEFT) - master.get_digital(DIGITAL_RIGHT)) * 200);
+        turntable.move_velocity((extra.get_digital(DIGITAL_LEFT) - extra.get_digital(DIGITAL_RIGHT)) * 200);
+
+        lift.set_brake_mode(MOTOR_BRAKE_HOLD);
 
         lift.move_velocity((master.get_digital(DIGITAL_X) - master.get_digital(DIGITAL_RIGHT)) * 200);
 

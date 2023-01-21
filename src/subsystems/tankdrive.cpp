@@ -18,7 +18,7 @@ double voltage(int vel) {
     return vel * 12.0 / 127;
 }
 
-void move_drive(void) {
+void move_drive_tank(void) {
     while (true) {
         double lY = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
         double rX = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
@@ -28,7 +28,7 @@ void move_drive(void) {
         int rB = lY - rX;
         int rF = lY - rX;
 
-        setDrive(voltage(lB), voltage(lF), voltage(rB), voltage(rF));
+        setDrive(voltage(lB), -voltage(lF), -voltage(rB), -voltage(rF));
         Task::delay(5);
     }
 
