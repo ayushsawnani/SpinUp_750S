@@ -15,6 +15,10 @@ void setDrive(double lB, double lF, double rB, double rF) {
   rightFront.move_voltage(rF * 1000);
   rightReallyFront.move_voltage(rF * 1000);
 
+    pros::lcd::print(2, "rightBack: %f RPM", rightBack.get_actual_velocity());
+  pros::lcd::print(3, "rightFront: %f RPM", rightFront.get_actual_velocity());
+  pros::lcd::print(4, "rightThird: %f RPM", rightReallyFront.get_actual_velocity());
+
 }
 
 double voltage(int vel) {
