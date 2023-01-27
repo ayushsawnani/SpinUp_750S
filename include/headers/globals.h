@@ -5,7 +5,7 @@
 extern Controller master;
 extern Controller extra;
 
-extern Motor leftBack, leftFront, rightBack, rightFront;
+extern Motor leftBack, leftFront, rightBack, rightFront, leftReallyFront, rightReallyFront;
 
 extern Motor triLeft, triRight, triBottom;
 

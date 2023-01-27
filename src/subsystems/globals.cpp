@@ -17,6 +17,20 @@ Controller extra(CONTROLLER_PARTNER);
     lB     rB
     \       /
 
+    for x drive
+
+*/
+
+
+
+/*
+
+    |   |
+    |   |
+    |   |
+
+6 wheel tank drive (top down is really front to bacl
+)
 */
 
 
@@ -24,7 +38,9 @@ Controller extra(CONTROLLER_PARTNER);
 Motor leftBack(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor leftFront(9, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 Motor rightFront(20, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightBack(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor rightBack(2, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftReallyFront(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightReallyFront(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 
 
 

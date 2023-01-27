@@ -111,7 +111,7 @@ void opcontrol() {
 	bool frightened = true;
 
 
-	
+	dispenser.set_value(false);
 	
 	
 
