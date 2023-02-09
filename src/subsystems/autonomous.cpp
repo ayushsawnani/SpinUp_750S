@@ -343,7 +343,7 @@ void single_rollerL_auton() {
     move_drive(500, 100);
 	lcd::clear_line(2);
     intake_roller.move_velocity(-400);
-    pros::delay(500);
+    pros::delay(700);
     intake_roller.move_velocity(0);
     pros::delay(10);
     move_drive(250, -100);

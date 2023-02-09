@@ -77,7 +77,7 @@ void setBuildMotors() {
             RUNNING_FLYWHEEL = !RUNNING_FLYWHEEL;
             pros::delay(250);
         }
-        if (extra.get_digital(DIGITAL_X)) {
+        if (master.get_digital(DIGITAL_X)) {
             running_endgame = true;
             pros::delay(250);
         }

@@ -10,15 +10,8 @@ void setDrive(double lB, double lF, double rB, double rF) {
   */
   leftBack.move_voltage(lB * 1000);
   leftFront.move_voltage(lF * 1000);
-  leftReallyFront.move_voltage(lF * 1000);
   rightBack.move_voltage(rB * 1000);
   rightFront.move_voltage(rF * 1000);
-  rightReallyFront.move_voltage(rF * 1000);
-
-    pros::lcd::print(2, "rightBack: %f RPM", rightBack.get_actual_velocity());
-  pros::lcd::print(3, "rightFront: %f RPM", rightFront.get_actual_velocity());
-  pros::lcd::print(4, "rightThird: %f RPM", rightReallyFront.get_actual_velocity());
-
 }
 
 double voltage(int vel) {
@@ -35,7 +28,7 @@ void move_drive_tank(void) {
         int rB = lY - rX;
         int rF = lY - rX;
 
-        setDrive(voltage(lB), -voltage(lF), voltage(rB), voltage(rF));
+        setDrive(voltage(lB), voltage(lF), voltage(rB), voltage(rF));
         Task::delay(5);
     }
 
