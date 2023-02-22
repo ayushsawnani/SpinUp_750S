@@ -113,6 +113,8 @@ void calculateXMotorSpeed(void) {
     // values for setting the motors
     double d1 = getDiag1(getTheta(lX, lY));
     double d2 = getDiag2(getTheta(lX, lY));
+
+
     double max = std::max(d1, d2) * sqrt(d1*d1 + d2*d2);
 
     // diagional/max caps the max coefficient to 1 instead of a really small
@@ -128,7 +130,7 @@ void calculateXMotorSpeed(void) {
     we chose not to have turn importance as we are mainly strafing around the field for driver control
     turn importance is R - rX
     */
-    // acc value * diagonal damp + rx
+    // acc value * diagonal coefficient + rx
     lF = (volted(getR(lX, lY)) * (d2)) - (volted(rX));
     lB = (volted(getR(lX, lY)) * (d1)) - (volted(rX));
     rF = (volted(getR(lX, lY)) * (d1)) + (volted(rX));

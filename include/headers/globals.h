@@ -9,6 +9,8 @@ extern Motor leftBack, leftFront, rightBack, rightFront, leftReallyFront, rightR
 
 extern Motor triLeft, triRight, triBottom;
 
+extern Motor catapult;
+
 //extern Motor expander;
 extern ADIDigitalOut dispenser; //pneumatics
 
@@ -23,6 +25,8 @@ extern Motor intake_roller;
 
 extern Motor flywheel_1;
 extern Motor flywheel_2;
+
+extern ADIButton limitSwitch;
 
 extern Motor lift;
 

@@ -3,7 +3,11 @@
 #include "pros/misc.h"
 #include "pros/motors.h"
 
+
+//for drive, intake/roller, lift
 Controller master(CONTROLLER_MASTER);
+
+//for indexer, endgame, expansion
 Controller extra(CONTROLLER_PARTNER);
 
 
@@ -35,14 +39,23 @@ w)
 
 
 
-Motor leftBack(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
-Motor leftFront(9, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor leftThird(17, E_MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
-Motor rightFront(20, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightBack(2, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor leftReallyFront(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightReallyFront(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftBack(20, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor leftFront(19, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftReallyFront(18, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 
+Motor rightBack(10, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightFront( 9, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightReallyFront(8, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+
+//the wheel to shoot out the disk
+//Motor flywheel_1(6, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor catapult(7, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+
+ADIDigitalOut endgame('C');
+
+
+//takes in the disks and ratcheted to intake roller
+Motor intake_roller(7, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 /*
@@ -53,43 +66,42 @@ Motor rightReallyFront(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
         __
 */
 
-Motor triLeft(11, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
-Motor triRight(2, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor triBottom(3, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor triLeft(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor triRight(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor triBottom(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 
 
 //expands the robot during endgame
-Motor expander(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor expander(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //pushes the disk to shoot it
 ADIDigitalOut dispenser('E');
 
-Motor dispenser2(12, MOTOR_GEARSET_18);
+Motor dispenser2(1, MOTOR_GEARSET_18);
 
 
-//takes in the disks and ratcheted to intake roller
-Motor intake_roller(8, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-//the wheel to shoot out the disk
-Motor flywheel_1(4, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+
 
 //Motor flywheel_2(16, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-Motor turntable(3, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor turntable(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-Motor lift(11, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor lift(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-ADIDigitalOut endgame('H');
+
 
 
 Motor endgame3000('A');
 
 
-IMU inertial_sensor(19);
+
+
+IMU inertial_sensor(1);
 
 //configure vision sensor
-Vision disk_vision_sensor(12);
-Vision roller_vision_sensor(11);
+Vision disk_vision_sensor(1);
+ Vision roller_vision_sensor(1);
 
 //encoders
 //odd port, next highest port, reversed
@@ -102,8 +114,12 @@ Motor encoderL(1, MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 Motor encoderR(1, MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 Motor encoderS(1, MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 
-Distance frontSensor(19);
-Distance backSensor(13);
+Distance frontSensor(1);
+Distance backSensor(1);
+
+
+ADIButton limitSwitch('B');
+
 
 int position_x = 0;
 int position_y = 0;
