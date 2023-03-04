@@ -81,11 +81,11 @@ void autonomous() {
 	//AUTON
 	//double_roller_auton();
 
-	single_rollerL_auton();
+	//single_rollerL_auton();
 
 	//single_rollerR_auton();
 	
-	//skills();
+	skills();
 	
 
 }
@@ -106,18 +106,6 @@ void autonomous() {
 void opcontrol() {
 
 
-
-
-
-
-
-	bool frightened = true;
-
-
-	dispenser.set_value(false);
-	
-	
-
 	//aimbot
 	//DONT UNCOMMENT
 	/*
@@ -132,6 +120,8 @@ void opcontrol() {
 	Task driverControlTask(move_drive_tank, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "driver control");
 	Task buildMotorTask(setBuildMotors, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "build");
 	//Task flywheelTask(print_flywheel_stuff, TASK_PRIORITY_MIN, TASK_STACK_DEPTH_DEFAULT, "flywheelprinty");
+
+	Task flywheelTask(flywheel_pid, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "flywheel");
 
 	//auton_run2();
 

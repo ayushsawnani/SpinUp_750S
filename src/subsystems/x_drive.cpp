@@ -27,10 +27,40 @@ void setDrive(int lB, int lF, int rB, int rF) {
   rightBack.move_velocity(rB);
   rightFront.move_velocity(rF);
   */
-  leftBack.move_voltage(lB * 1000);
-  leftFront.move_voltage(lF * 1000);
-  rightBack.move_voltage(rB * 1000);
-  rightFront.move_voltage(rF * 1000);
+
+  double heading = inertial_sensor.get_heading();
+
+  if (heading > 90) {
+
+    if (heading > 180) {
+      if (heading < 270) {
+        leftBack.move_voltage(lF * 1000);
+        leftFront.move_voltage(rB * 1000);
+        rightBack.move_voltage(rF * 1000);
+        rightFront.move_voltage(lB * 1000);
+
+      } else {
+        leftBack.move_voltage(rB * 1000);
+        leftFront.move_voltage(rF * 1000);
+        rightBack.move_voltage(lB * 1000);
+        rightFront.move_voltage(lF * 1000);
+
+      }
+
+    } else {
+        leftBack.move_voltage(rF * 1000);
+        leftFront.move_voltage(lB * 1000);
+        rightBack.move_voltage(lF * 1000);
+        rightFront.move_voltage(rB * 1000);
+    }
+
+  } else {
+      leftBack.move_voltage(lB * 1000);
+      leftFront.move_voltage(lF * 1000);
+      rightBack.move_voltage(rB * 1000);
+      rightFront.move_voltage(rF * 1000);
+  }
+
 }
 
 

@@ -39,23 +39,28 @@ w)
 
 
 
-Motor leftBack(20, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
-Motor leftFront(19, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor leftReallyFront(18, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftBack(8, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftFront(9, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor leftReallyFront(10, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 
-Motor rightBack(10, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightFront( 9, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
-Motor rightReallyFront(8, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightBack(6, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor rightFront(5, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
+Motor rightReallyFront(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 //the wheel to shoot out the disk
-//Motor flywheel_1(6, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
-Motor catapult(7, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor flywheel_1(3, MOTOR_GEARSET_06, false, MOTOR_ENCODER_COUNTS);
+//Motor catapult(7, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-ADIDigitalOut endgame('C');
+//radio is 1
 
 
 //takes in the disks and ratcheted to intake roller
-Motor intake_roller(7, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+Motor intake_roller(4, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
+
+
+ADIDigitalOut blooper('D');
+ADIDigitalOut dispenser('E');
+
 
 
 /*
@@ -74,10 +79,12 @@ Motor triBottom(1, MOTOR_GEARSET_18, true, MOTOR_ENCODER_COUNTS);
 //expands the robot during endgame
 Motor expander(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
-//pushes the disk to shoot it
-ADIDigitalOut dispenser('E');
 
 Motor dispenser2(1, MOTOR_GEARSET_18);
+
+
+IMU inertial_sensor(7);
+
 
 
 
@@ -97,7 +104,6 @@ Motor endgame3000('A');
 
 
 
-IMU inertial_sensor(1);
 
 //configure vision sensor
 Vision disk_vision_sensor(1);

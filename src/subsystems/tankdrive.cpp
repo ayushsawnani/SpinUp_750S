@@ -11,13 +11,13 @@ void setDrive(double lB, double lF, double rB, double rF) {
   */
 
   lcd::print(5, "lb: %f", lB);
-  leftBack.move_voltage(lB * -1000);
+  leftBack.move_voltage(lB * 1000);
   leftFront.move_voltage(lF * 1000);
-  rightBack.move_voltage(rB * -1000);
+  rightBack.move_voltage(rB * 1000);
   rightFront.move_voltage(rF * -1000);
 
   leftReallyFront.move_voltage(lF * 1000);
-  rightReallyFront.move_voltage(rF * -1000);
+  rightReallyFront.move_voltage(rF * 1000);
 
 //   leftBack.move_velocity(lB * -1000);
 //   leftFront.move_velocity(lF * 1000);

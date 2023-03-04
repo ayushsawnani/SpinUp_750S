@@ -16,6 +16,8 @@ extern ADIDigitalOut dispenser; //pneumatics
 
 extern Motor endgame3000;
 
+extern ADIDigitalOut blooper;
+
 extern ADIDigitalOut endgame;
 
 
