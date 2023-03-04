@@ -67,7 +67,7 @@ void setBuildMotors() {
     
 }
 
-static double target_rpm = -450;
+static double target_rpm = -350;
 void flywheel_pid() {
 
     float Kfp = 1.5;
@@ -97,11 +97,11 @@ void flywheel_pid() {
         flywheel_1.move_velocity((target_rpm + speed) * RUNNING_FLYWHEEL);
 
         if (RUNNING_FLYWHEEL && flywheel_1.get_actual_velocity() >= target_rpm + 100)  {
-            intake_roller.move_velocity(-master.get_digital(DIGITAL_L2) * 200);
+            intake_roller.move_velocity(-master.get_digital(DIGITAL_L2) * 600);
         }
         else {
                     intake_roller.move_velocity(
-            (master.get_digital(DIGITAL_L1) - master.get_digital(DIGITAL_L2)) * 200);
+            (master.get_digital(DIGITAL_L1) - master.get_digital(DIGITAL_L2)) * 600);
         }
 
         pros::lcd::print(6, "flywheel vel: %f", flywheel_1.get_actual_velocity() * RUNNING_FLYWHEEL);
