@@ -83,9 +83,11 @@ void autonomous() {
 
 	//single_rollerL_auton();
 
-	//single_rollerR_auton();
+	single_rollerR_auton();
 	
-	skills();
+	//skills();
+
+
 	
 
 }

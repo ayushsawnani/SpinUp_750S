@@ -59,7 +59,7 @@ Motor intake_roller(4, MOTOR_GEARSET_18, false, MOTOR_ENCODER_COUNTS);
 
 
 ADIDigitalOut blooper('D');
-ADIDigitalOut dispenser('E');
+ADIDigitalOut endgame('E');
 
 
 

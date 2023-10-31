@@ -133,7 +133,7 @@ void angle_drive1(int deg, int vel) {
 //0 pts
 void skills() {
 
-    move_drive(500, -25);
+    move_drive(525, -25);
 	//lcd::clear_line(2);
     intake_roller.move_velocity(-800);
     pros::delay(250);
@@ -157,7 +157,7 @@ void skills() {
 
     move_drive(500, 50);
 
-    angle_drive(1150, 50);
+    angle_drive(1050, 50);
 
     p_controller(80, 100);
 
@@ -167,7 +167,7 @@ void skills() {
     int disks_shot = 0;
     while (true) {
         pros::lcd::print(4, "flywheel: %f", flywheel_1.get_actual_velocity());
-        if (flywheel_1.get_actual_velocity() <= target_rpm) {
+        if (flywheel_1.get_actual_velocity() <= target_rpm + 50) {
             
             intake_roller.move_velocity(400);
             pros::delay(400);
@@ -181,8 +181,48 @@ void skills() {
             
     }
     disks_shot = 0;
+    flywheel_1.move_velocity(0);
+
+    angle_drive(900, -50);
+
+    p_controller(200, 100);
 
     angle_drive(1050, -50);
+
+    move_drive(1500, -50);
+
+    move_drive(750, -25);
+
+    intake_roller.move_velocity(-800);
+    pros::delay(250);
+    intake_roller.move_velocity(0);
+
+
+    p_controller(50, 100);
+
+    angle_drive(1050, -50);
+
+    move_drive(1000, -100);
+
+    move_drive(750, -25);
+
+    pros::delay(1);
+
+    intake_roller.move_velocity(-800);
+    pros::delay(250);
+    intake_roller.move_velocity(0);
+
+    move_drive(500, 50);
+
+    angle_drive(500, 50);
+
+    for(int i = 0; i < 10; i++) {
+        blooper.set_value(true);
+        pros::delay(100);
+        blooper.set_value(false);
+        pros::delay(100);
+    }
+
 
 
 
@@ -218,9 +258,9 @@ void single_rollerR_auton() {
     p_controller(50, 100);
 
     intake_roller.move_velocity(-400);
-    move_drive(1000, 45);
+    move_drive(1200, 45);
     intake_roller.move_velocity(0);
-    angle_drive(500, 50);
+    angle_drive(450, 50);
     move_drive(1650, -100);
 
     
@@ -244,12 +284,9 @@ void double_roller_auton() {
 	}
     move_drive(500, -100);
 	lcd::clear_line(2);
-    //intake_roller_motor.moveVelocity(-200);
     pros::delay(200);
-    //intake_roller_motor.moveVelocity(0);
     pros::delay(10);
     p_controller(12,100); //should take like 1.744 seconds -> dont know if i should make p or reg
-    //hassis->turnAngle(180_deg);
     angle_drive(1100, -50);
     p_controller(315, 100);
 
@@ -259,25 +296,10 @@ void double_roller_auton() {
     angle_drive(1600, 100);
     move_drive(900, -100);
     pros::delay(10);
-    //chassis->turnAngle(520_deg);
-    //intake_roller_motor.moveVelocity(-200);
     pros::delay(2000);
-    //intake_roller_motor.moveVelocity(0);
     pros::delay(10);
 
     angle_drive(1200, 50);
-    p_controller(110, 100); //move into low goal
-    //angle_drive(1600, -100);
-
-    flywheel_1.move_velocity(600);    //shoot into low goal
-    pros::delay(950);
-    dispenser2.move_velocity(0);
-    pros::delay(5);
-    dispenser2.move_velocity(-200);
-    pros::delay(200);
-    dispenser2.move_velocity(0);
-
-    
 
 }
 
